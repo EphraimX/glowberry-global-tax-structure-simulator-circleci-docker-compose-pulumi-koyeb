@@ -4,7 +4,7 @@ orbs:
 jobs:
   pulumi-deploy:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/python:3.12
     working_directory: ~/project
     steps:
       - checkout
