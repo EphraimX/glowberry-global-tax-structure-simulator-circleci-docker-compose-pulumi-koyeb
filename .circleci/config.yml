@@ -5,22 +5,32 @@ jobs:
   pulumi-deploy:
     docker:
       - image: cimg/base:stable
-    working_directory: ~/project/pulumi-koyeb/
+    working_directory: ~/project
     steps:
       - checkout
+      - run:
+          name: Debug file structure
+          command: |
+            pwd
+            ls -al
+            ls -al pulumi-koyeb
       - pulumi/login
       - run:
           name: Select or initialize Pulumi stack
-          working_directory: ~/project/pulumi-koyeb/
-          command: pulumi stack select EphraimX/pulumi-koyeb/glowberry-dev-gha-stack #|| pulumi stack init EphraimX/pulumi-koyeb/glowberry-dev-gha-stack
+          working_directory: ~/project/pulumi-koyeb
+          command: |
+            if ! pulumi stack select glowberry-dev-gha-stack 2>/dev/null; then
+              pulumi stack init glowberry-dev-gha-stack
+            fi
       - run:
           name: Pulumi Preview
-          working_directory: ~/project/pulumi-koyeb/
+          working_directory: ~/project/pulumi-koyeb
           command: pulumi preview
       - run:
           name: Pulumi Up
-          working_directory: ~/project/pulumi-koyeb/
+          working_directory: ~/project/pulumi-koyeb
           command: pulumi up -y
+
 workflows:
   build-and-deploy-to-koyeb:
     jobs:
