@@ -11,12 +11,15 @@ jobs:
       - pulumi/login
       - run:
           name: Select or initialize Pulumi stack
-          command: pulumi stack select EphraimX/pulumi-koyeb/glowberry-dev-gha-stack || pulumi stack init EphraimX/pulumi-koyeb/glowberry-dev-gha-stack
+          working_directory: ~/project/pulumi-koyeb/
+          command: pulumi stack select EphraimX/pulumi-koyeb/glowberry-dev-gha-stack #|| pulumi stack init EphraimX/pulumi-koyeb/glowberry-dev-gha-stack
       - run:
           name: Pulumi Preview
+          working_directory: ~/project/pulumi-koyeb/
           command: pulumi preview
       - run:
           name: Pulumi Up
+          working_directory: ~/project/pulumi-koyeb/
           command: pulumi up -y
 workflows:
   build-and-deploy-to-koyeb:
