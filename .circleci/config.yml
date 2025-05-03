@@ -5,6 +5,7 @@ jobs:
   pulumi-deploy:
     docker:
       - image: cimg/base:stable
+    working_directory: ~/project/pulumi-koyeb/
     steps:
       - checkout
       - pulumi/login
