@@ -10,7 +10,7 @@ jobs:
       - pulumi/login
       - run:
           name: Select or initialize Pulumi stack
-          command: pulumi stack select glowberry-dev-gha-stack || pulumi stack init glowberry-dev-gha-stack
+          command: pulumi stack select EphraimX/pulumi-koyeb/glowberry-dev-gha-stack || pulumi stack init EphraimX/pulumi-koyeb/glowberry-dev-gha-stack
       - run:
           name: Pulumi Preview
           command: pulumi preview
