@@ -1,23 +1,35 @@
 version: 2.1
-orbs:
-  pulumi: pulumi/pulumi@2.0.0
 jobs:
   pulumi-deploy:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
-      - pulumi/login:
-          cloud-url: "https://app.pulumi.com/"
+      - run:
+          name: Install Pulumi CLI
+          command: |
+            curl -fsSL https://get.pulumi.com | sh
+            export PATH=$PATH:/root/.pulumi/bin
+      - run:
+          name: Pulumi Login
+          command: |
+            export PATH=$PATH:/root/.pulumi/bin
+            pulumi login https://app.pulumi.com/
       - run:
           name: Select or initialize Pulumi stack
-          command: pulumi stack select glowberry-dev-gha-stack || pulumi stack init glowberry-dev-gha-stack
+          command: |
+            export PATH=$PATH:/root/.pulumi/bin
+            pulumi stack select glowberry-dev-gha-stack || pulumi stack init glowberry-dev-gha-stack
       - run:
           name: Pulumi Preview
-          command: pulumi preview
+          command: |
+            export PATH=$PATH:/root/.pulumi/bin
+            pulumi preview
       - run:
           name: Pulumi Up
-          command: pulumi up -y
+          command: |
+            export PATH=$PATH:/root/.pulumi/bin
+            pulumi up -y
 workflows:
   build-and-deploy-to-koyeb:
     jobs:
