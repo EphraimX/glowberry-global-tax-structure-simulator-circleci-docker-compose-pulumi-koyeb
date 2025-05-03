@@ -23,9 +23,12 @@ jobs:
               pulumi stack init glowberry-dev-gha-stack
             fi
       - run:
-          name: Pulumi Preview
+          name: Installing Koyeb Pulimi Resource & Pulumi Preview
           working_directory: ~/project/pulumi-koyeb
-          command: pulumi preview
+          command: |
+            mkdir -p ~/.pulumi/plugins/resource-koyeb-v0.1.11
+            curl -L https://github.com/koyeb/pulumi-koyeb/releases/download/v0.1.11/pulumi-resource-koyeb-v0.1.11-linux-amd64.tar.gz | tar -xz -C ~/.pulumi/plugins/resource-koyeb-v0.1.11
+            pulumi preview
       - run:
           name: Pulumi Up
           working_directory: ~/project/pulumi-koyeb
